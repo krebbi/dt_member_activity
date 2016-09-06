@@ -1,339 +1,134 @@
-<?php if (is_object($user)) {
-    $token_validator = \Core::make('helper/validation/token');
-
-    $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service\Date */
-    ?>
-
-    <style type="text/css">
-        div[data-container=editable-fields] section {
-            margin-bottom: 30px;
-            position: relative;
-            border-bottom: 1px solid #f1f1f1;
-            padding-bottom: 30px;
-            clear: both;
-        }
-    </style>
-
-    <form action="<?php echo $view->action('update_status', $user->getUserID()) ?>" method="post">
-        <?php echo $token_validator->output() ?>
-        <div class="ccm-dashboard-header-buttons btn-group">
-            <?php if (Config::get('concrete.user.registration.validate_email') == true && $canActivateUser) { ?>
-                <?php if ($user->isValidated() < 1) { ?>
-                    <button type="submit" name="task" value="validate"
-                            class="btn btn-default"><?php echo t('Mark Email as Valid') ?></button>
-                <?php } ?>
-            <?php } ?>
-
-            <?php if ($canActivateUser) { ?>
-                <?php if ($user->isActive()) { ?>
-                    <button type="submit" name="task" value="deactivate"
-                            class="btn btn-default"><?php echo t('Deactivate User') ?></button>
-                <?php } else { ?>
-                    <button type="submit" name="task" value="activate"
-                            class="btn btn-default"><?php echo t('Activate User') ?></button>
-                <?php } ?>
-            <?php } ?>
-
-            <?php if ($canSignInAsUser) { ?>
-                <button type="submit" name="task" value="sudo"
-                        class="btn btn-default"><?php echo t('Sign in As User') ?></button>
-            <?php } ?>
-            <?php if ($canDeleteUser) { ?>
-                <button type="submit" name="task" value="delete" class="btn btn-danger"><?php echo t('Delete') ?></button>
-            <?php } ?>
-        </div>
-    </form>
-
-
-    <div data-container="editable-fields">
-
-        <section>
-            <div class="row">
-                <div class="col-md-6">
-                    <h4><?php echo t('Basic Details') ?></h4>
-
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Username') ?></p></div>
-                        <div class="col-md-8"><p><span <?php if ($canEditUserName) { ?>data-editable-field-type="xeditable"
-                                                       data-url="<?php echo $view->action('update_username', $user->getUserID()) ?>"
-                                                       data-type="text"
-                                                       data-name="uName" <?php } ?>><?php echo h($user->getUserName()) ?></span></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Email Address') ?></p></div>
-                        <div class="col-md-8"><p><span <?php if ($canEditEmail) { ?>data-editable-field-type="xeditable"
-                                                       data-url="<?php echo $view->action('update_email', $user->getUserID()) ?>"
-                                                       data-type="email"
-                                                       data-name="uEmail"<?php } ?>><?php echo h($user->getUserEmail()) ?></span></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Password') ?></p></div>
-                        <div class="col-md-8"><p><?php if ($canEditPassword) { ?><a href="#" class="btn btn-xs btn-default"
-                                                                                 data-button="change-password"><?php echo t('Change') ?></a><?php } else { ?>*********<?php } ?>
-                            </p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Profile Picture') ?></p></div>
-                        <div class="col-md-8"><p>
-
-                            <div <?php if ($canEditAvatar) { ?>data-editable-field-type="image"
-                                 data-editable-field-inline-commands="true"
-                                 data-url="<?php echo $view->action('update_avatar', $user->getUserID()) ?>"<?php } ?>>
-                                <ul class="ccm-edit-mode-inline-commands">
-                                    <li><a href="#" data-editable-field-command="clear"><i
-                                                class="fa fa-trash-o"></i></a></li>
-                                </ul>
-	                <span class="editable-image-wrapper">
-	                    <input type="file" id="file-avatar" name="avatar"/>
-	                    <div
-                            class="editable-image-display"><?php echo $user->getUserAvatar()->output() ?></div>
-					</span>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <h4><?php echo t('Account') ?></h4>
-
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Date Created') ?></p></div>
-                        <div class="col-md-8"><p><?php echo $dh->formatDateTime($user->getUserDateAdded()) ?></p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Last IP Address') ?></p></div>
-                        <div class="col-md-8"><p><?php echo $user->getLastIPAddress() ?></p></div>
-                    </div>
-                    <?php if (ENABLE_USER_TIMEZONE) {
-                        $uTimezone = $user->getUserTimezone();
-                        if (empty($uTimezone)) {
-                            $uTimezone = date_default_timezone_get();
-                        }
-                        ?>
-                        <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Timezone') ?></p></div>
-                            <div class="col-md-8"><p><span
-                                        <?php if ($canEditTimezone) { ?>data-editable-field-type="xeditable"
-                                        data-source="<?php echo $view->action('get_timezones') ?>"
-                                        data-url="<?php echo $view->action('update_timezone', $user->getUserID()) ?>"
-                                        data-type="select2" data-name="uTimezone"
-                                        data-value="<?php echo h($uTimezone) ?>"<?php } ?>><?php echo $dh->getTimezoneDisplayName($uTimezone) ?></span>
-                                </p></div>
-                        </div>
-                    <?php } ?>
-                    <?php
-                    $languages = Localization::getAvailableInterfaceLanguages();
-                    if (count($languages) > 0) { ?>
-                        <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Language') ?></p></div>
-                            <div class="col-md-8"><p><span
-                                        <?php if ($canEditLanguage) { ?>data-editable-field-type="xeditable"
-                                        data-source="<?php echo $view->action('get_languages') ?>"
-                                        data-url="<?php echo $view->action('update_language', $user->getUserID()) ?>"
-                                        data-type="select"
-                                        data-name="uDefaultLanguage"<?php } ?>><?php echo h($user->getUserDefaultLanguage()); ?></span>
-                                </p></div>
-                        </div>
-                    <?php } ?>
-                    <?php if (Config::get('concrete.user.registration.validate_email')) { ?>
-                        <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Full Record') ?></p></div>
-                            <div class="col-md-8"><p><?php echo ($user->isFullRecord()) ? "Yes" : "No" ?></p></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Email Validated') ?></p></div>
-                            <div class="col-md-8"><p><?php
-                                    switch ($user->isValidated()) {
-                                        case '-1':
-                                            print t('Unknown');
-                                            break;
-                                        case '0':
-                                            print t('No');
-                                            break;
-                                        case '1':
-                                            print t('Yes');
-                                            break;
-                                    } ?></p></div>
-                        </div>
-                    <?php } ?>
-
-                    <h4><?php echo t('Groups') ?></h4>
-
-                    <div data-container="group-list"></div>
-
-                    <?php
-                    if ($canAddGroup) { ?>
-                        <hr>
-                        <a class="btn btn-default btn-xs" data-button="assign-groups" dialog-width="640"
-                           dialog-height="480" dialog-modal="true"
-                           href="<?php echo URL::to('/ccm/system/dialogs/group/search') ?>?filter=assign"
-                           dialog-title="<?php echo t('Add Groups') ?>" dialog-modal="false"><?php echo t('Add Group') ?></a>
-                    <?php } ?>
-                </div>
-
-            </div>
-        </section>
-
-        <section>
-            <h4><?php echo t('Other Attributes') ?></h4>
-            <?php Loader::element('attribute/editable_list', array(
-                'attributes' => $attributes,
-                'object' => $user,
-                'saveAction' => $view->action('update_attribute', $user->getUserID()),
-                'clearAction' => $view->action('clear_attribute', $user->getUserID()),
-                'permissionsArguments' => array('attributes' => $allowedEditAttributes),
-                'permissionsCallback' => function ($ak, $permissionsArguments) {
-                    return (is_array($permissionsArguments['attributes']) && in_array($ak->getAttributeKeyID(), $permissionsArguments['attributes']));
-                }
-            )); ?>
-        </section>
-
-    </div>
-
-    <?php if ($canEditPassword) { ?>
-
-        <div style="display: none">
-            <div data-dialog="change-password" class="ccm-ui">
-                <form data-dialog-form="change-password"
-                      action="<?php echo $view->action('change_password', $user->getUserID()) ?>">
-                    <?php echo $token_validator->output('change_password') ?>
-
-                    <div class="form-group">
-                        <?php echo $form->label('uPassword', t('Password')) ?>
-                        <?php echo $form->password('uPassword', array('autocomplete' => 'off')) ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?php echo $form->label('uPasswordConfirm', t('Confirm Password')) ?>
-                        <?php echo $form->password('uPasswordConfirm', array('autocomplete' => 'off')) ?>
-                    </div>
-
-                    <div class="dialog-buttons">
-                        <button class="btn btn-default pull-left"
-                                data-dialog-action="cancel"><?php echo t('Cancel') ?></button>
-                        <button type="button" data-dialog-action="submit"
-                                class="btn btn-primary pull-right"><?php echo t('Update') ?></button>
-                    </div>
-
-
-                </form>
-            </div>
-        </div>
-    <?php } ?>
-
-    <script type="text/template" data-template="user-add-groups">
-        <% _.each(groups, function(group) { %>
-        <div class="row" data-editable-field-inline-commands="true" data-group-id="<%=group.gID%>">
-            <ul class="ccm-edit-mode-inline-commands">
-                <li><a href="#" data-group-id="<%=group.gID%>" data-button="delete-group"><i class="fa fa-trash-o"></i></a>
-                </li>
-            </ul>
-            <div class="col-md-6"><p><%=group.gDisplayName%></p></div>
-            <div class="col-md-6"><p><%=group.gDateTimeEntered%></p></div>
-        </div>
-        <% }); %>
-    </script>
-
-    <script type="text/javascript">
-        $(function () {
-
-            var _addGroupsTemplate = _.template($('script[data-template=user-add-groups]').html());
-            $('div[data-container=group-list]').append(
-                _addGroupsTemplate({'groups': <?php echo $groupsJSON?>})
-            );
-            $('div[data-container=editable-fields]').concreteEditableFieldContainer({
-                url: '<?php echo $view->action('save', $user->getUserID())?>',
-                data: {
-                    ccm_token: '<?php echo $token_validator->generate()?>'
-                }
-            });
-
-            $('button[name=task][value=sudo]').on('click', function () {
-                return confirm('<?php echo t("This will end your current session and sign you in as %s", $user->getUserName())?>');
-            });
-
-            $('button[name=task][value=delete]').on('click', function () {
-                return confirm('<?php echo t("Are you sure you want to permanently remove this user?")?>');
-            });
-            ConcreteEvent.subscribe('SelectGroup', function (e, data) {
-                $.concreteAjax({
-                    url: "<?php echo URL::to('/ccm/system/user/add_group')?>",
-                    data: {
-                        gID: data.gID,
-                        uID: '<?php echo $user->getUserID()?>',
-                        ccm_token: '<?php echo $token_validator->generate('add_group') ?>'
-                    },
-                    success: function (r) {
-
-                        $('div[data-container=group-list]').append(
-                            _addGroupsTemplate({'groups': r.groups})
-                        );
-                        _.each(r.groups, function (group) {
-                            $('div[data-container=group-list] div[data-group-id=' + group.gID + ']').addClass('animated bounceIn');
-                        });
-                        jQuery.fn.dialog.closeTop();
-                    }
-                });
-            });
-
-            $('div[data-container=editable-fields]').on('click', 'a[data-button=change-password]', function () {
-                $.fn.dialog.open({
-                    element: 'div[data-dialog=change-password]',
-                    title: '<?php echo t('Change Password')?>',
-                    width: '280',
-                    height: '220',
-                    modal: true,
-                    close: function () {
-                        $(this).find('input[type=password]').val('');
-                    }
-                });
-                return false;
-            });
-
-            $('div[data-container=editable-fields]').on('click', 'a[data-button=delete-group]', function () {
-                $.concreteAjax({
-                    url: "<?php echo URL::to('/ccm/system/user/remove_group')?>",
-                    data: {
-                        gID: $(this).attr('data-group-id'),
-                        uID: '<?php echo $user->getUserID()?>',
-                        ccm_token: '<?php echo $token_validator->generate('remove_group') ?>'
-                    },
-                    success: function (r) {
-                        $('div[data-container=group-list] div[data-group-id=' + r.group.gID + ']').queue(function () {
-                            $(this).addClass('animated bounceOutLeft');
-                            $(this).dequeue();
-                        }).delay(500).queue(function () {
-                            $(this).remove();
-                            $(this).dequeue();
-                        })
-                        jQuery.fn.dialog.closeTop();
-                    }
-                });
-                return false;
-            });
-
-            $('a[data-button=assign-groups]').dialog();
-
-        });
-    </script>
-<?php } else {
-
+<?php
     $tp = Loader::helper('concrete/user');
-    if ($tp->canAccessUserSearchInterface()) { ?>
+    if ($tp->canAccessUserSearchInterface()) {
+        if(empty($userActivity)) { ?>
         <div class="ccm-dashboard-content-full" data-search="users">
-            <?php Loader::element('users/search', array('controller' => $searchController)) ?>
-        </div>
+            <?php //Loader::element('users/search', array('controller' => $searchController)) ?>
+            <?php
+            $form = Loader::helper('form');
 
-        <div class="ccm-dashboard-header-buttons">
-            <a href="<?php echo View::url('/dashboard/users/add') ?>"
-               class="btn btn-primary"><?php echo t("Add User") ?></a>
-        </div>
+            $searchFields = $searchController->getSearchFields();
 
-    <?php } else { ?>
+            if (Config::get('concrete.permissions.model') == 'advanced') {
+                $searchFields['group_set'] = t('Group Set');
+            }
+
+            $ek = PermissionKey::getByHandle('edit_user_properties');
+            $ik = PermissionKey::getByHandle('activate_user');
+            $dk = PermissionKey::getByHandle('delete_user');
+
+            $flr = new \Concrete\Core\Search\StickyRequest('users');
+            $searchRequest = $flr->getSearchRequest();
+
+            ?>
+
+            <script type="text/template" data-template="search-form">
+                <form role="form" data-search-form="users" action="<?php echo URL::to('/ccm/system/search/users/submit')?>" class="ccm-search-fields">
+                    <div class="ccm-search-fields-row form-inline">
+                        <div class="form-group">
+                            <select data-bulk-action="users" disabled class="ccm-search-bulk-action form-control">
+                                <option value=""><?php echo t('Items Selected')?></option>
+                                <?php if ($ek->validate()) { ?>
+                                    <option data-bulk-action-type="dialog" data-bulk-action-title="<?php echo t('Edit Properties')?>" data-bulk-action-url="<?php echo URL::to('/ccm/system/dialogs/user/bulk/properties')?>" data-bulk-action-dialog-width="630" data-bulk-action-dialog-height="450"><?php echo t('Edit Properties')?></option>
+                                <?php } ?>
+                                <?php /*
+			<?php if ($ik->validate()) { ?>
+				<option value="activate"><?=t('Activate')?></option>
+				<option value="deactivate"><?=t('Deactivate')?></option>
+			<?php } ?>
+			<option value="group_add"><?=t('Add to Group')?></option>
+			<option value="group_remove"><?=t('Remove from Group')?></option>
+			<?php if ($dk->validate()) { ?>
+			<option value="delete"><?=t('Delete')?></option>
+			<?php } ?>
+ */ ?>
+                                <?php if ($mode == 'choose_multiple') { ?>
+                                    <option value="choose"><?php echo t('Choose')?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="ccm-search-main-lookup-field">
+                                <i class="fa fa-search"></i>
+                                <?php echo $form->search('keywords', $searchRequest['keywords'], array('placeholder' => t('Username or Email')))?>
+                                <button type="submit" class="ccm-search-field-hidden-submit" tabindex="-1"><?php echo t('Search')?></button>
+                            </div>
+                        </div>
+                        <ul class="ccm-search-form-advanced list-inline">
+                            <li><a href="#" data-search-toggle="advanced"><?php echo t('Advanced Search')?></a>
+                            <li><a href="#" data-search-toggle="customize" data-search-column-customize-url="<?php echo URL::to('/ccm/system/dialogs/user/search/customize')?>"><?php echo t('Customize Results')?></a>
+                        </ul>
+                    </div>
+                    <div class="ccm-search-fields-row">
+                        <div class="form-group form-group-full">
+                            <?php echo $form->label('gID', t('In Group'))?>
+                            <?php
+                            $gl = new GroupList();
+                            $g1 = $gl->getResults();
+                            ?>
+                            <div class="ccm-search-field-content">
+                                <select multiple name="gID[]" class="select2-select" style="width: 360px">
+                                    <?php foreach ($g1 as $g) {
+                                        $gp = new Permissions($g);
+                                        if ($gp->canSearchUsersInGroup($g)) {
+                                            ?>
+                                            <option value="<?php echo $g->getGroupID()?>"  <?php if (is_array($searchRequest['gID']) && in_array($g->getGroupID(), $searchRequest['gID'])) { ?> selected="selected" <?php } ?>><?php echo $g->getGroupDisplayName()?></option>
+                                            <?php
+                                        }
+                                    } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ccm-search-fields-advanced"></div>
+                    <div class="ccm-search-fields-row ccm-search-fields-submit">
+                        <div class="form-group form-group-full">
+                            <label class="control-label"><?php echo t('Per Page')?></label>
+                            <div class="ccm-search-field-content ccm-search-field-content-select2">
+                                <?php echo $form->select('numResults', array(10 => t('10'), 20 => t('20'), 50 => t('50'), 100 => t('100'), 250 => t('250'), 500 => t('500'), 1000 => t('1000'))); ?>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right"><?php echo t('Search')?></button>
+                    </div>
+                </form>
+            </script>
+
+            <script type="text/template" data-template="search-field-row">
+                <div class="ccm-search-fields-row">
+                    <select name="field[]" class="ccm-search-choose-field" data-search-field="users">
+                        <option value=""><?php echo t('Choose Field')?></option>
+                        <?php foreach ($searchFields as $key => $value) { ?>
+                            <option value="<?php echo $key?>" <% if (typeof(field) != 'undefined' && field.field == '<?php echo $key?>') { %>selected<% } %> data-search-field-url="<?php echo URL::to('/ccm/system/search/users/field', $key)?>"><?php echo $value?></option>
+                        <?php } ?>
+                    </select>
+
+                    <div class="ccm-search-field-content"><% if (typeof(field) != 'undefined') { %><%=field.html%><% } %></div>
+                    <a data-search-remove="search-field" class="ccm-search-remove-field" href="#"><i class="fa fa-minus-circle"></i></a>
+                </div>
+            </script>
+
+            <script type="text/template" data-template="search-results-table-body">
+                <% _.each(items, function (user) {%>
+                <tr>
+                    <td><span class="ccm-search-results-checkbox"><input type="checkbox" class="ccm-flat-checkbox" data-user-id="<%-user.uID%>" data-user-name="<%-user.uName%>" data-user-email="<%-user.uEmail%>" data-search-checkbox="individual" value="<%-user.uID%>" /></span></td>
+                    <% for (i = 0; i < user.columns.length; i++) {
+                    var column = user.columns[i];
+                    %>
+                    <td><%= column.value %></td>
+                    <% } %>
+                </tr>
+                <% }); %>
+            </script>
+
+            <?php Loader::element('search/template')?>
+
+        </div>
+    <?php
+        }
+        else {
+
+        }
+
+    } else { ?>
         <p><?php echo t('You do not have access to user search. This setting may be changed in the access section of the dashboard settings page.') ?></p>
     <?php } ?>
-
-<?php } ?>
