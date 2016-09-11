@@ -1,0 +1,385 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-09-07 13:21+0200\n"
+"PO-Revision-Date: 2016-09-07 13:21+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: t\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: controller.php:26
+msgid "Track Member Activity"
+msgstr "Benutzeraktivität aufzeichnen"
+
+#: controller.php:31
+msgid ""
+"All Member Activities will be tracked.<br>created by <a href=\"https://www."
+"datatainment.de\" target=\"_blank\">datatainment</a>"
+msgstr ""
+"Zeichnen Sie alle Aktivitäten Ihrer angemeldeten Benutzer auf. <br> "
+"Präsentiert von <a href=\"https://www.datatainment.de\" target=\"_blank"
+"\">datatainment</a>"
+
+#: controller.php:124
+msgid "Member Activity"
+msgstr "Benutzeraktivität"
+
+#: controller.php:136
+#, fuzzy
+msgid "datatainment Member Activity"
+msgstr "datatainment Benutzeraktivität"
+
+#: controller.php:144
+msgid "Last Activity"
+msgstr "Letzte Aktivität"
+
+#: controller.php:148
+msgid "Last Login"
+msgstr "Letzter Login"
+
+#: controllers/single_page/dashboard/users/activity.php:27
+#, php-format
+msgid "View %s"
+msgstr "%s Ansehen"
+
+#: controllers/single_page/dashboard/users/activity.php:55
+#, fuzzy, php-format
+msgid "View/Edit %s"
+msgstr "%s anzeigen/bearbeiten"
+
+#: elements/users/activity.php:8 single_pages/dashboard/users/activity.php:13
+#, fuzzy
+msgid "Group Set"
+msgstr "Gruppenalbum"
+
+#: elements/users/activity.php:25 single_pages/dashboard/users/activity.php:30
+#, fuzzy
+msgid "Items Selected"
+msgstr "Auswahl"
+
+#: elements/users/activity.php:27 single_pages/dashboard/users/activity.php:32
+#, fuzzy
+msgid "Edit Properties"
+msgstr "Eigenschaften bearbeiten"
+
+#: elements/users/activity.php:41 single_pages/dashboard/users/activity.php:46
+#, fuzzy
+msgid "Choose"
+msgstr "Auswählen"
+
+#: elements/users/activity.php:48 single_pages/dashboard/users/activity.php:53
+#, fuzzy
+msgid "Username or Email"
+msgstr "Benutzername / E-Mail"
+
+#: elements/users/activity.php:49 elements/users/activity.php:86
+#: single_pages/dashboard/users/activity.php:54
+#: single_pages/dashboard/users/activity.php:91
+#, fuzzy
+msgid "Search"
+msgstr "Suchen"
+
+#: elements/users/activity.php:53 single_pages/dashboard/users/activity.php:58
+#, fuzzy
+msgid "Advanced Search"
+msgstr "Erweiterte Suche"
+
+#: elements/users/activity.php:54 single_pages/dashboard/users/activity.php:59
+#, fuzzy
+msgid "Customize Results"
+msgstr "Suchergebnisse anpassen"
+
+#: elements/users/activity.php:59 single_pages/dashboard/users/activity.php:64
+#, fuzzy
+msgid "In Group"
+msgstr "In Gruppe"
+
+#: elements/users/activity.php:81 single_pages/dashboard/users/activity.php:86
+#, fuzzy
+msgid "Per Page"
+msgstr "Pro Seite"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "10"
+msgstr "10"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "20"
+msgstr "20"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "50"
+msgstr "50"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "100"
+msgstr "100"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "250"
+msgstr "250"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "500"
+msgstr "500"
+
+#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "1000"
+msgstr "1000"
+
+#: elements/users/activity.php:94 single_pages/dashboard/users/activity.php:99
+#, fuzzy
+msgid "Choose Field"
+msgstr "Feld wählen"
+
+#: single_pages/dashboard/users/activity.php:133
+#, fuzzy
+msgid ""
+"You do not have access to user search. This setting may be changed in the "
+"access section of the dashboard settings page."
+msgstr ""
+"Sie verfügen nicht über die Berechtigung zur Benutzersuche. Diese Option "
+"kann im Modul Berechtigungen setzen in der Verwaltung unter den "
+"Einstellungen geändert werden."
+
+#~ msgid "Access Denied."
+#~ msgstr "Zugriff verweigert."
+
+#~ msgid "Altair Kanban Boards"
+#~ msgstr "Altair Kanban Boards"
+
+#~ msgid "This package requires that Altair Theme be installed"
+#~ msgstr "Dieses Paket erfordert, dass Altair Theme installiert ist."
+
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
+
+#~ msgid "Please enter a Board Name"
+#~ msgstr "Bitte ein Boardnamen eintragen"
+
+#~ msgid "The Board Name can not be greater than 255 Characters"
+#~ msgstr "Der Name darf nicht mehr als 255 Zeichen enthalten."
+
+#~ msgid "Please enter a Colum Name"
+#~ msgstr "Bitte geben Sie einen Spaltennamen ein"
+
+#~ msgid "The Column Name can not be greater than 255 Characters"
+#~ msgstr "Der Spaltenname darf nicht mehr als 255 Zeichen enthalten"
+
+#~ msgid "Please enter a Item Name"
+#~ msgstr "Bitte einen Aufgabentitel eingeben"
+
+#~ msgid "The Item Name can not be greater than 255 Characters"
+#~ msgstr "Der Aufgabenname darf nicht mehr als 255 Zeichen enthalten"
+
+#~ msgid "Board Name"
+#~ msgstr "Boardname"
+
+#~ msgid "Short Description"
+#~ msgstr "Kurzbeschreibung"
+
+#~ msgid "Board Details"
+#~ msgstr "Boarddetails"
+
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
+
+#~ msgid "Add Board"
+#~ msgstr "Board hinzufügen"
+
+#~ msgid "Add task"
+#~ msgstr "Aufgabe hinzufügen"
+
+#~ msgid "Edit Column"
+#~ msgstr "Spalte bearbeiten"
+
+#~ msgid "Do you really want to delete &quot;%s&quot; ?"
+#~ msgstr "&quot;%s&quot; wirklich löschen?"
+
+#~ msgid "Delete Column"
+#~ msgstr "Spalte löschen"
+
+#, fuzzy
+#~ msgid "Task"
+#~ msgstr "Aufgabe"
+
+#~ msgid "Column"
+#~ msgstr "Spalte"
+
+#~ msgid "Help"
+#~ msgstr "Hilfe"
+
+#~ msgid "Assignee"
+#~ msgstr "Verantwortlich"
+
+#~ msgid "The User responsible for this Task."
+#~ msgstr "Der für die Aufgabe verantwortliche Benutzer."
+
+#~ msgid "Created by"
+#~ msgstr "Erstellt von"
+
+#~ msgid "The User who created this Task."
+#~ msgstr "Der Benutzer, der die Aufgabe erstellt hat."
+
+#~ msgid "Updated"
+#~ msgstr "Aktualisiert"
+
+#~ msgid "The Last User and/or Date of the last Task update."
+#~ msgstr "Der Benutzer bzw. das Datum der letzten Aktualisierung."
+
+#~ msgid "The Deadline or Due-Date for the Task."
+#~ msgstr "Die Deadline bzw. der Fertigstellungstermin der Aufgabe."
+
+#~ msgid "Close"
+#~ msgstr "Schließen"
+
+#~ msgid "Column Name"
+#~ msgstr "Spaltenname"
+
+#~ msgid "Concluding Column"
+#~ msgstr "Abschließende Spalte"
+
+#~ msgid "Save"
+#~ msgstr "Speichern"
+
+#~ msgid "Add Column"
+#~ msgstr "Spalte hinzufügen"
+
+#~ msgid "New Task"
+#~ msgstr "Neue Aufgabe"
+
+#~ msgid "Task Name"
+#~ msgstr "Aufgabenname"
+
+#~ msgid "Task Details"
+#~ msgstr "Aufgabendetails"
+
+#~ msgid "Me"
+#~ msgstr "Ich"
+
+#~ msgid "Due Date"
+#~ msgstr "Fertigstellungstermin"
+
+#~ msgid "Priority"
+#~ msgstr "Priorität"
+
+#~ msgid "MINOR"
+#~ msgstr "GERING"
+
+#~ msgid "CRITICAL"
+#~ msgstr "KRITISCH"
+
+#~ msgid "BLOCKER"
+#~ msgstr "BLOCKER"
+
+#~ msgid "Add Task"
+#~ msgstr "Aufgabe hinzufügen"
+
+#~ msgid "My Boards"
+#~ msgstr "Meine Boards"
+
+#~ msgid "Invited Boards"
+#~ msgstr "Eingeladene Boards"
+
+#~ msgid "Leave"
+#~ msgstr "Verlassen"
+
+#~ msgid "Pending Invitations"
+#~ msgstr "Austehende Einladungen"
+
+#~ msgid "by"
+#~ msgstr "von"
+
+#~ msgid "Accept"
+#~ msgstr "Annehmen"
+
+#~ msgid "Decline"
+#~ msgstr "Ablehnen"
+
+#~ msgid "Board"
+#~ msgstr "Board"
+
+#~ msgid "The User and Date of the last Board update."
+#~ msgstr "Die Benutzer und Datum der letzten Aktualisierung des Boards."
+
+#, fuzzy
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "Edit the Board Details and Invite other People to join your board."
+#~ msgstr "Boarddetails bearbeiten und Andere zum Board einladen."
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Remove Board / Remove User from Board."
+#~ msgstr "Board löschen / Benutzer vom Board entfernen."
+
+#~ msgid "Edit Board"
+#~ msgstr "Board bearbeiten"
+
+#~ msgid "Basic Settings"
+#~ msgstr "Grundeinstellungen"
+
+#~ msgid "Invite User"
+#~ msgstr "Benutzer einladen"
+
+#~ msgid "Email"
+#~ msgstr "E-Mail"
+
+#~ msgid "Manage Own"
+#~ msgstr "Eigene Aufgaben"
+
+#~ msgid "Manage All"
+#~ msgstr "Alle Aufgaben"
+
+#~ msgid "Invite"
+#~ msgstr "Einladen"
+
+#~ msgid "Create Board"
+#~ msgstr "Board erstellen"
+
+#, fuzzy
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid "Created"
+#~ msgstr "Erstellt"
+
+#, fuzzy
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Comments"
+#~ msgstr "Kommentare"
+
+#~ msgid "Add Comment..."
+#~ msgstr "Kommentar hinzufügen..."
+
+#~ msgid "Add Comment"
+#~ msgstr "Kommentieren"
+
+#~ msgid "Details"
+#~ msgstr "Details"
+
+#~ msgid "Change Due Date"
+#~ msgstr "Fertigstellungstermin ändern"
+
+#~ msgid "Edit Columns"
+#~ msgstr "Spalten bearbeiten"

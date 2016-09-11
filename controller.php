@@ -19,7 +19,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.0.3';
+    protected $pkgVersion = '0.9.2.5';
 
     public function getPackageName()
     {
@@ -44,6 +44,14 @@ class Controller extends Package
         $pkg = parent::upgrade();
         self::installSinglePages($pkg);
         self::installUserAttributes($pkg);
+    }
+
+    public function uninstall()
+    {
+        parent::uninstall();
+        $db = \Database::connection();
+        $db->query('drop table DtMemberActivityLog');
+        self::uninstallUserAttributes();
     }
 
     public function on_start()
@@ -121,7 +129,7 @@ class Controller extends Package
     public static function installSinglePages($pkg)
     {
         $page = \SinglePage::add('/dashboard/users/activity', $pkg);
-        $page->updateCollectionName(t('User Activity'));
+        $page->updateCollectionName(t('Member Activity'));
     }
 
     public static function installUserAttributes($pkg)
@@ -131,9 +139,9 @@ class Controller extends Package
         $uakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_MULTIPLE);
 
         //define attr group, and the different attribute types we'll use
-        $attrSet = AttributeSet::getByHandle('dt_user_tracking');
+        $attrSet = AttributeSet::getByHandle('dt_member_activity');
         if (!is_object($attrSet)) {
-            $attrSet = $uakc->addSet('dt_member_activity', t('datatainment Member Acitivity'), $pkg);
+            $attrSet = $uakc->addSet('dt_member_activity', t('datatainment Member Activity'), $pkg);
         }
         $text = AttributeType::getByHandle('text');
         $address = AttributeType::getByHandle('address');
@@ -141,16 +149,23 @@ class Controller extends Package
         $date = AttributeType::getByHandle('date');
 
 
-        self::installUserAttribute('dt_last_activity', 'Last Activity', $date, $pkg, $attrSet,[
+        self::installUserAttribute('dt_last_activity', t('Last Activity'), $date, $pkg, $attrSet,[
             'uakProfileEdit' => false,
             'akIsSearchable' => true
         ]);
-        self::installUserAttribute('dt_last_login', 'Last Login', $date, $pkg, $attrSet,[
+        self::installUserAttribute('dt_last_login', t('Last Login'), $date, $pkg, $attrSet,[
             'uakProfileEdit' => false,
             'akIsSearchable' => true
         ]);
-
     }
+
+    public static function uninstallUserAttributes()
+    {
+        AttributeSet::getByHandle('dt_member_activity')->delete();
+        UserAttributeKey::getByHandle('dt_last_activity')->delete();
+        UserAttributeKey::getByHandle('dt_last_login')->delete();
+    }
+
     public static function installUserAttribute($handle, $name, $type, $pkg, $set, $data = null)
     {
         $attr = UserAttributeKey::getByHandle($handle);
