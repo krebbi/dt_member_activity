@@ -18,6 +18,13 @@ class Activity extends DashboardPageController
 {
     public function view($uID = false)
     {
+        $this->requireAsset('javascript', 'dt.tablesorter');
+        $this->requireAsset('javascript', 'dt.tablesorter.widgets');
+        $this->requireAsset('javascript', 'dt.tablesorter.widgets.alignchar');
+        $this->requireAsset('javascript', 'dt.tablesorter.extras.pager');
+
+        //$this->requireAsset('css', 'dt.tablesorter');
+
         if ($uID) {
             $user = User::getByUserID(Loader::helper('security')->sanitizeInt($uID));
             if($user instanceof User) {

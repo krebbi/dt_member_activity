@@ -3,16 +3,11 @@
 namespace Concrete\Package\DtMemberActivity;
 
 use \Core;
-use Concrete\Core\File\File;
 use Concrete\Core\User\User;
-use Concrete\Core\Page\Page;
 use Concrete\Core\Package\Package;
 use Concrete\Core\SinglePage;
-use Concrete\Core\Http\Request;
-use Concrete\Core\Attribute\Key\Category as AttributeKeyCategory;
-use Concrete\Core\Attribute\Key\UserKey as UserAttributeKey;
-use Concrete\Core\Attribute\Type as AttributeType;
-use AttributeSet;
+use Concrete\Core\Asset\Asset;
+use Concrete\Core\Asset\AssetList;
 use Concrete\Package\DtMemberActivity\Src\DtMemberLog;
 
 class Controller extends Package
@@ -56,6 +51,20 @@ class Controller extends Package
 
     public function on_start()
     {
+        $al = AssetList::getInstance();
+
+        $ph = Array('position' => Asset::ASSET_POSITION_HEADER, 'minify' => false, 'combine' => false);
+        $pf = Array('position' => Asset::ASSET_POSITION_FOOTER, 'minify' => false, 'combine' => false);
+
+        $al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/jquery.tablesorter.combined.min.js', $pf, $this );
+        //$al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/jquery.tablesorter.js', $pf, $this );
+        //$al->register( 'javascript', 'dt.tablesorter.widgets', 'src/tablesorter/jquery.tablesorter.widgets.js', $pf, $this );
+        //$al->register( 'javascript', 'dt.tablesorter.widgets.alignchar', 'src/tablesorter/widgets/widget-alignChar.min.js', $pf, $this );
+        //$al->register( 'javascript', 'dt.tablesorter.extras.pager', 'src/tablesorter/extras/jquery.tablesorter.pager.min.js', $pf, $this );
+
+        //$al->register( 'css', 'dt.tablesorter', 'src/tablesorter/_tablesorter.less', $ph, $this );
+
+
         \Events::addListener(
             'on_page_view',
             function ($e)
