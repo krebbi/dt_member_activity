@@ -34,6 +34,11 @@ class DtMemberLog
     /**
      * @Column(type="text",nullable=false)
      */
+    protected $luIP;
+
+    /**
+     * @Column(type="text",nullable=false)
+     */
     protected $luEmail;
 
     /**
@@ -68,10 +73,14 @@ class DtMemberLog
 
     }
 
-
     public function setUserID($uID)
     {
         $this->luID = $uID;
+    }
+
+    public function setIP($uIP)
+    {
+        $this->luIP = $uIP;
     }
 
     public function setUserName($uName)
@@ -156,7 +165,7 @@ class DtMemberLog
     {
         $em = \ORM::entityManager();
         return $em->getRepository(get_class())->findOneBy(
-            ['uID' => $uID],
+            ['luID' => $uID],
             ['lID' => 'DESC']
         );
     }
@@ -179,7 +188,12 @@ class DtMemberLog
 
     public function getUserID()
     {
-        return $this->uID;
+        return $this->luID;
+    }
+
+    public function getIP()
+    {
+        return $this->luIP;
     }
 
     public function getDate()
@@ -187,9 +201,9 @@ class DtMemberLog
         return $this->lDate;
     }
 
-    public function getCollectionID()
+    public function getTypeID()
     {
-        return $this->cID;
+        return $this->lTypeID;
     }
 
     public function getType()
@@ -197,6 +211,15 @@ class DtMemberLog
         return h($this->lType);
     }
 
+    public function getTypeName()
+    {
+        return h($this->lTypeName);
+    }
+
+    public function getTypePath()
+    {
+        return h($this->lTypePath);
+    }
 
 
     public function save()

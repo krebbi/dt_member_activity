@@ -19,7 +19,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.2.5';
+    protected $pkgVersion = '0.9.3.0';
 
     public function getPackageName()
     {
@@ -74,6 +74,7 @@ class Controller extends Package
                     $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
                     $log->setUserName($u->getUserName());
                     $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
+                    $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                     $log->save();
                     $u->getUserInfoObject()->setAttribute('dt_last_activity',$log->getDate()->format('Y-m-d H:i:s'));
                 }
@@ -97,7 +98,9 @@ class Controller extends Package
                     $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
                     $log->setUserName($u->getUserName());
                     $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
+                    $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                     $log->save();
+                    $u->getUserInfoObject()->setAttribute('dt_last_activity',$log->getDate()->format('Y-m-d H:i:s'));
                 }
             }
         );
@@ -119,6 +122,7 @@ class Controller extends Package
                     $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
                     $log->setUserName($u->getUserName());
                     $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
+                    $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                     $log->save();
                     $u->getUserInfoObject()->setAttribute('dt_last_login',$log->getDate()->format('Y-m-d H:i:s'));
                 }
