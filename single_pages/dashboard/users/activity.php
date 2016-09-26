@@ -2,15 +2,11 @@
     $tp = Loader::helper('concrete/user');
     $dh = Core::make('helper/date');
     if ($tp->canAccessUserSearchInterface()) {
-        if(empty($userActivity)) { ?>
+        if(empty($userActivities)) { ?>
         <div class="ccm-dashboard-content-full" data-search="users">
-            <style type="text/css">
-                .tablesorter-header:focus {
-                    outline:none !important;
-                }
-            </style>
-            <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table dt-tablesorter tablesorter">
-                <thead>
+            <div class="table-responsive">
+                <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table tablesorter dt-tablesorter">
+                    <thead>
                     <tr>
                         <th class="false"><a href="#"><?= t('Username') ?></a></th>
                         <th class="false"><a href="#"><?= t('Email') ?></a></th>
@@ -39,126 +35,67 @@
             <?php }
             ?>
                 </tbody>
-            </table>
-            <ul class="uk-pagination ts_pager">
-                <li data-uk-tooltip title="Select Page">
-                    <select class="ts_gotoPage ts_selectize"></select>
-                </li>
-                <li class="first"><a href="javascript:void(0)"><i class="uk-icon-angle-double-left"></i></a></li>
-                <li class="prev"><a href="javascript:void(0)"><i class="uk-icon-angle-left"></i></a></li>
-                <li><span class="pagedisplay"></span></li>
-                <li class="next"><a href="javascript:void(0)"><i class="uk-icon-angle-right"></i></a></li>
-                <li class="last"><a href="javascript:void(0)"><i class="uk-icon-angle-double-right"></i></a></li>
-                <li data-uk-tooltip title="Page Size">
-                    <select class="pagesize ts_selectize">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="all">all</option>
-                    </select>
-                </li>
-            </ul>
+                </table>
+            </div>
         </div>
             <script>
                 $(window).on('load', function() {
-
-                    var pagerOptions = {
-                        container: $(".ts_pager"),
-                        output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
-                        fixedHeight: true,
-                        removeRows: false,
-                        cssGoto: '.ts_gotoPage'
-                    };
-
                     // Initialize tablesorter
-                    var ts_users = $("table.dt-tablesorter")
+                    var $ts_users = $("table.dt-tablesorter")
                         .tablesorter({
-                            theme: 'altair',
+                            theme: 'bootstrap_2',
                             widthFixed: true,
                             widgets: ['zebra', 'filter']
                         })
-                        // initialize the pager plugin
-                        .tablesorterPager(pagerOptions)
-                        .on('pagerComplete', function(e, filter){
-                            // update selectize value
-                            if(typeof selectizeObj !== 'undefined' && selectizeObj.data('selectize')) {
-                                selectizePage = selectizeObj[0].selectize;
-                                selectizePage.setValue($('select.ts_gotoPage option:selected').index() + 1, false);
-                            }
-                        });
-
-                    // replace 'goto Page' select
-                    function createPageSelectize() {
-                        selectizeObj = $('select.ts_gotoPage')
-                            .val($("select.ts_gotoPage option:selected").val())
-                            .after('<div class="selectize_fix"></div>')
-                            .selectize({
-                                hideSelected: true,
-                                onDropdownOpen: function($dropdown) {
-                                    $dropdown
-                                        .hide()
-                                        .velocity('slideDown', {
-                                            duration: 280,
-                                            easing: easing_swiftOut
-                                        })
-                                },
-                                onDropdownClose: function($dropdown) {
-                                    $dropdown
-                                        .show()
-                                        .velocity('slideUp', {
-                                            duration: 280,
-                                            easing: easing_swiftOut
-                                        });
-                                    // hide tooltip
-                                    $('.uk-tooltip').hide();
-                                }
-                            });
-                    }
-                    createPageSelectize();
-
-                    // replace 'pagesize' select
-                    $('.pagesize.ts_selectize')
-                        .after('<div class="selectize_fix"></div>')
-                        .selectize({
-                            hideSelected: true,
-                            onDropdownOpen: function($dropdown) {
-                                $dropdown
-                                    .hide()
-                                    .velocity('slideDown', {
-                                        duration: 280,
-                                        easing: easing_swiftOut
-                                    })
-                            },
-                            onDropdownClose: function($dropdown) {
-                                $dropdown
-                                    .show()
-                                    .velocity('slideUp', {
-                                        duration: 280,
-                                        easing: easing_swiftOut
-                                    });
-
-                                // hide tooltip
-                                $('.uk-tooltip').hide();
-                                if(typeof selectizeObj !== 'undefined' && selectizeObj.data('selectize')) {
-                                    selectizePage = selectizeObj[0].selectize;
-                                    selectizePage.destroy();
-                                    $('.ts_gotoPage').next('.selectize_fix').remove();
-                                    setTimeout(function() {
-                                        createPageSelectize()
-                                    })
-                                }
-
-                            }
-                        });
                 });
             </script>
     <?php
         }
         else {
-
             // Detailed User Activity
             ?>
+
+            <div class="ccm-dashboard-content-full" data-search="users">
+                <div class="table-responsive">
+                    <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table tablesorter dt-tablesorter">
+                        <thead>
+                        <tr>
+                            <th class="false"><a href="#"><?= t('Date') ?></a></th>
+                            <th class="false"><a href="#"><?= t('IP') ?></a></th>
+                            <th class="false"><a href="#"><?= t('Type') ?></a></th>
+                            <th class="false"><a href="#"><?= t('Name') ?></a></th>
+                            <th class="false"><a href="#"><?= t('Path') ?></a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach ($userActivities as $activity) {
+                            ?>
+                            <tr>
+                                <td><span class="hidden"><?= $activity->getDate()->getTimestamp() ?></span><?= $dh->formatDateTime($activity->getDate(), true, true) ?></td>
+                                <td><?= $activity->getIP() ?></td>
+                                <td><?= $activity->getType() ?></td>
+                                <td><?= $activity->getTypeName() ?></td>
+                                <td><?= $activity->getTypePath() ?></td>
+                            </tr>
+
+                        <?php }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <script>
+                $(window).on('load', function() {
+                    // Initialize tablesorter
+                    var $ts_users = $("table.dt-tablesorter")
+                        .tablesorter({
+                            theme: 'bootstrap_2',
+                            widthFixed: true,
+                            widgets: ['zebra', 'filter']
+                        })
+                });
+            </script>
 
             <div class="ccm-dashboard-header-buttons">
                 <a href="<?php echo URL::to('/dashboard/users/activity') ?>"

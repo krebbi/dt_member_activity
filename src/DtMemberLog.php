@@ -174,9 +174,26 @@ class DtMemberLog
     {
         $em = \ORM::entityManager();
         return $em->getRepository(get_class())->findBy(
-            ['uID' => $uID],
-            ['lID' => 'ASC']
+            ['luID' => $uID],
+            ['lID' => 'DESC']
         );
+    }
+
+    public static function getActivityByUserAndDaterange($uID,$from,$to)
+    {
+        $em = \ORM::entityManager();
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select(array('s'))
+            ->from(get_class(), 's')
+            ->where('s.luID = :uID')
+            ->andWhere('s.lDate > :from')
+            ->andWhere('s.lDate < :to')
+            ->setParameter('uID', $uID)
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->getQuery();
+
+        return $query->getResult();
     }
 
 

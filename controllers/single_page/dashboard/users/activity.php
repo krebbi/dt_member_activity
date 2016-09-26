@@ -3,7 +3,6 @@ namespace Concrete\Package\DtMemberActivity\Controller\SinglePage\Dashboard\User
 
 use \Concrete\Core\Page\Controller\DashboardPageController;
 use Config;
-use Imagine\Image\Box;
 use Loader;
 use Exception;
 use User;
@@ -16,14 +15,16 @@ use Concrete\Package\DtMemberActivity\Src\DtMemberLog;
 
 class Activity extends DashboardPageController
 {
-    public function view($uID = false)
+    public function view($uID = false, $from = false, $to = false)
     {
         $this->requireAsset('javascript', 'dt.tablesorter');
         $this->requireAsset('javascript', 'dt.tablesorter.widgets');
         $this->requireAsset('javascript', 'dt.tablesorter.widgets.alignchar');
-        $this->requireAsset('javascript', 'dt.tablesorter.extras.pager');
+        //$this->requireAsset('javascript', 'dt.tablesorter.extras.pager');
 
-        //$this->requireAsset('css', 'dt.tablesorter');
+        $this->requireAsset('css', 'dt.tablesorter');
+        $this->requireAsset('css', 'dt.tablesorter.filter');
+
 
         if ($uID) {
             $user = User::getByUserID(Loader::helper('security')->sanitizeInt($uID));
@@ -36,8 +37,11 @@ class Activity extends DashboardPageController
         if (is_object($ui)) {
             $this->set('pageTitle', t('View %s\'s activity', $user->getUserName()));
 
-            $this->set('message', 'uID given');
-            $this->set('userActivity',['activity'=>'yes']);
+            if($from && $to) {
+                $this->set('userActivities', DtMemberLog::getActivityByUserAndDaterange($uID,$from,$to));
+            } else {
+                $this->set('userActivities', DtMemberLog::getActivityByUser($uID));
+            }
 
         } else {
             $userlist = new \Concrete\Core\User\UserList();

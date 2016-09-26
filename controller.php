@@ -56,13 +56,13 @@ class Controller extends Package
         $ph = Array('position' => Asset::ASSET_POSITION_HEADER, 'minify' => false, 'combine' => false);
         $pf = Array('position' => Asset::ASSET_POSITION_FOOTER, 'minify' => false, 'combine' => false);
 
-        $al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/jquery.tablesorter.combined.min.js', $pf, $this );
-        //$al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/jquery.tablesorter.js', $pf, $this );
-        //$al->register( 'javascript', 'dt.tablesorter.widgets', 'src/tablesorter/jquery.tablesorter.widgets.js', $pf, $this );
-        //$al->register( 'javascript', 'dt.tablesorter.widgets.alignchar', 'src/tablesorter/widgets/widget-alignChar.min.js', $pf, $this );
-        //$al->register( 'javascript', 'dt.tablesorter.extras.pager', 'src/tablesorter/extras/jquery.tablesorter.pager.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/js/jquery.tablesorter.combined.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.widgets', 'src/tablesorter/js/jquery.tablesorter.widgets.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.widgets.alignchar', 'src/tablesorter/js/widgets/widget-alignChar.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.extras.pager', 'src/tablesorter/js/extras/jquery.tablesorter.pager.min.js', $pf, $this );
 
-        //$al->register( 'css', 'dt.tablesorter', 'src/tablesorter/_tablesorter.less', $ph, $this );
+        $al->register( 'css', 'dt.tablesorter', 'src/tablesorter/css/theme.c5.css', $ph, $this );
+        $al->register( 'css', 'dt.tablesorter.filter', 'src/tablesorter/css/filter.formatter.min.css', $ph, $this );
 
 
         \Events::addListener(
