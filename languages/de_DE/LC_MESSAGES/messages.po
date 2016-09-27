@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-09-07 13:21+0200\n"
-"PO-Revision-Date: 2016-09-07 13:21+0200\n"
+"POT-Creation-Date: 2016-09-27 16:05+0200\n"
+"PO-Revision-Date: 2016-09-27 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -29,126 +29,167 @@ msgstr ""
 "Präsentiert von <a href=\"https://www.datatainment.de\" target=\"_blank"
 "\">datatainment</a>"
 
-#: controller.php:124
+#: controller.php:150
 msgid "Member Activity"
 msgstr "Benutzeraktivität"
 
-#: controller.php:136
+#: controller.php:162
 #, fuzzy
 msgid "datatainment Member Activity"
 msgstr "datatainment Benutzeraktivität"
 
-#: controller.php:144
+#: controller.php:170 single_pages/dashboard/users/activity.php:15
 msgid "Last Activity"
 msgstr "Letzte Aktivität"
 
-#: controller.php:148
+#: controller.php:174 single_pages/dashboard/users/activity.php:14
 msgid "Last Login"
 msgstr "Letzter Login"
 
-#: controllers/single_page/dashboard/users/activity.php:27
+#: controllers/single_page/dashboard/users/activity.php:38
 #, php-format
-msgid "View %s"
-msgstr "%s Ansehen"
+msgid "View %s's activity"
+msgstr "%s's Aktivität"
 
-#: controllers/single_page/dashboard/users/activity.php:55
-#, fuzzy, php-format
-msgid "View/Edit %s"
-msgstr "%s anzeigen/bearbeiten"
-
-#: elements/users/activity.php:8 single_pages/dashboard/users/activity.php:13
+#: elements/users/activity.php:8
 #, fuzzy
 msgid "Group Set"
 msgstr "Gruppenalbum"
 
-#: elements/users/activity.php:25 single_pages/dashboard/users/activity.php:30
+#: elements/users/activity.php:25
 #, fuzzy
 msgid "Items Selected"
 msgstr "Auswahl"
 
-#: elements/users/activity.php:27 single_pages/dashboard/users/activity.php:32
+#: elements/users/activity.php:27
 #, fuzzy
 msgid "Edit Properties"
 msgstr "Eigenschaften bearbeiten"
 
-#: elements/users/activity.php:41 single_pages/dashboard/users/activity.php:46
+#: elements/users/activity.php:41
 #, fuzzy
 msgid "Choose"
 msgstr "Auswählen"
 
-#: elements/users/activity.php:48 single_pages/dashboard/users/activity.php:53
+#: elements/users/activity.php:48
 #, fuzzy
 msgid "Username or Email"
 msgstr "Benutzername / E-Mail"
 
 #: elements/users/activity.php:49 elements/users/activity.php:86
-#: single_pages/dashboard/users/activity.php:54
-#: single_pages/dashboard/users/activity.php:91
 #, fuzzy
 msgid "Search"
 msgstr "Suchen"
 
-#: elements/users/activity.php:53 single_pages/dashboard/users/activity.php:58
+#: elements/users/activity.php:53
 #, fuzzy
 msgid "Advanced Search"
 msgstr "Erweiterte Suche"
 
-#: elements/users/activity.php:54 single_pages/dashboard/users/activity.php:59
+#: elements/users/activity.php:54
 #, fuzzy
 msgid "Customize Results"
 msgstr "Suchergebnisse anpassen"
 
-#: elements/users/activity.php:59 single_pages/dashboard/users/activity.php:64
+#: elements/users/activity.php:59
 #, fuzzy
 msgid "In Group"
 msgstr "In Gruppe"
 
-#: elements/users/activity.php:81 single_pages/dashboard/users/activity.php:86
+#: elements/users/activity.php:81
 #, fuzzy
 msgid "Per Page"
 msgstr "Pro Seite"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "10"
 msgstr "10"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "20"
 msgstr "20"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "50"
 msgstr "50"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "100"
 msgstr "100"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "250"
 msgstr "250"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "500"
 msgstr "500"
 
-#: elements/users/activity.php:83 single_pages/dashboard/users/activity.php:88
+#: elements/users/activity.php:83
 #, fuzzy
 msgid "1000"
 msgstr "1000"
 
-#: elements/users/activity.php:94 single_pages/dashboard/users/activity.php:99
+#: elements/users/activity.php:94
 #, fuzzy
 msgid "Choose Field"
 msgstr "Feld wählen"
 
-#: single_pages/dashboard/users/activity.php:133
+#: single_pages/dashboard/users/activity.php:11
+#, fuzzy
+msgid "Username"
+msgstr "Benutzername"
+
+#: single_pages/dashboard/users/activity.php:12
+msgid "Email"
+msgstr "E-Mail"
+
+#: single_pages/dashboard/users/activity.php:13
+#, fuzzy
+msgid "# Logins"
+msgstr "Anzahl der Anmeldungen"
+
+#: single_pages/dashboard/users/activity.php:16
+msgid "Last IP"
+msgstr "Letzte IP"
+
+#: single_pages/dashboard/users/activity.php:63
+#, fuzzy
+msgid "Date"
+msgstr "Datum"
+
+#: single_pages/dashboard/users/activity.php:64
+#, fuzzy
+msgid "IP"
+msgstr "IP"
+
+#: single_pages/dashboard/users/activity.php:65
+#, fuzzy
+msgid "Type"
+msgstr "Typ"
+
+#: single_pages/dashboard/users/activity.php:66
+#, fuzzy
+msgid "Name"
+msgstr "Name"
+
+#: single_pages/dashboard/users/activity.php:67
+#, fuzzy
+msgid "Path"
+msgstr "Pfad"
+
+#: single_pages/dashboard/users/activity.php:102
+#, fuzzy
+msgid "Back"
+msgstr "Zurück"
+
+#: single_pages/dashboard/users/activity.php:109
 #, fuzzy
 msgid ""
 "You do not have access to user search. This setting may be changed in the "
@@ -157,6 +198,13 @@ msgstr ""
 "Sie verfügen nicht über die Berechtigung zur Benutzersuche. Diese Option "
 "kann im Modul Berechtigungen setzen in der Verwaltung unter den "
 "Einstellungen geändert werden."
+
+#~ msgid "View %s"
+#~ msgstr "%s Ansehen"
+
+#, fuzzy
+#~ msgid "View/Edit %s"
+#~ msgstr "%s anzeigen/bearbeiten"
 
 #~ msgid "Access Denied."
 #~ msgstr "Zugriff verweigert."
@@ -264,17 +312,11 @@ msgstr ""
 #~ msgid "New Task"
 #~ msgstr "Neue Aufgabe"
 
-#~ msgid "Task Name"
-#~ msgstr "Aufgabenname"
-
 #~ msgid "Task Details"
 #~ msgstr "Aufgabendetails"
 
 #~ msgid "Me"
 #~ msgstr "Ich"
-
-#~ msgid "Due Date"
-#~ msgstr "Fertigstellungstermin"
 
 #~ msgid "Priority"
 #~ msgstr "Priorität"
@@ -339,9 +381,6 @@ msgstr ""
 
 #~ msgid "Invite User"
 #~ msgstr "Benutzer einladen"
-
-#~ msgid "Email"
-#~ msgstr "E-Mail"
 
 #~ msgid "Manage Own"
 #~ msgstr "Eigene Aufgaben"

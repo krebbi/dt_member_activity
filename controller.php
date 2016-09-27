@@ -8,13 +8,19 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\SinglePage;
 use Concrete\Core\Asset\Asset;
 use Concrete\Core\Asset\AssetList;
+use AttributeSet;
+use Concrete\Core\Attribute\Key\Category as AttributeKeyCategory;
+use Concrete\Core\Attribute\Key\UserKey as UserAttributeKey;
+use Concrete\Core\Attribute\Type as AttributeType;
 use Concrete\Package\DtMemberActivity\Src\DtMemberLog;
+use Concrete\Package\DtMemberActivity\Src\DtIgnoreList;
+
 
 class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.4.0';
+    protected $pkgVersion = '0.9.4.3';
 
     public function getPackageName()
     {
@@ -74,18 +80,21 @@ class Controller extends Package
                     $page = $e->getPageObject();
                     $path = $_SERVER['REQUEST_URI'];
 
-                    $log = new DtMemberLog();
-                    $log->setType('Collection');
-                    $log->setTypeID($page->getCollectionID());
-                    $log->setTypeName($page->getCollectionName());
-                    $log->setTypePath($path);
-                    $log->setUserID($u->getUserID());
-                    $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
-                    $log->setUserName($u->getUserName());
-                    $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
-                    $log->setIP($u->getUserInfoObject()->getLastIPAddress());
-                    $log->save();
-                    $u->getUserInfoObject()->setAttribute('dt_last_activity',$log->getDate()->format('Y-m-d H:i:s'));
+                    if (!DtIgnoreList::isListed($path)) {
+
+                        $log = new DtMemberLog();
+                        $log->setType('Collection');
+                        $log->setTypeID($page->getCollectionID());
+                        $log->setTypeName($page->getCollectionName());
+                        $log->setTypePath($path);
+                        $log->setUserID($u->getUserID());
+                        $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app'))))->setTimeZone(new \DateTimeZone('UTC')));
+                        $log->setUserName($u->getUserName());
+                        $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
+                        $log->setIP($u->getUserInfoObject()->getLastIPAddress());
+                        $log->save();
+                        $u->getUserInfoObject()->setAttribute('dt_last_activity', $log->getDate()->format('Y-m-d H:i:s'));
+                    }
                 }
             }
         );

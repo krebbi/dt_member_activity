@@ -48,6 +48,22 @@ class DtIgnoreList
         );
     }
 
+    public static function isListed($path)
+    {
+        $em = \ORM::entityManager();
+        $result = $em->getRepository(get_class())->findBy(
+            ['ilPath' => $path],
+            ['ilID' => 'ASC']
+        );
+        if ($result) return true; else return false;
+    }
+
+    public function save()
+    {
+        $em = \ORM::entityManager();
+        $em->persist($this);
+        $em->flush();
+    }
 
     public function remove()
     {

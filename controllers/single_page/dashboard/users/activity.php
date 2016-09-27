@@ -12,6 +12,7 @@ use URL;
 use stdClass;
 use Localization;
 use Concrete\Package\DtMemberActivity\Src\DtMemberLog;
+use Concrete\Package\DtMemberActivity\Src\DtIgnoreList;
 
 class Activity extends DashboardPageController
 {
@@ -54,6 +55,24 @@ class Activity extends DashboardPageController
             $this->set('users', $users);
             $this->set('userslastactivity', $userslastactivity);
         }
+    }
+
+    public function addIgnore()
+    {
+        //$_POST['ignore'] = "/boards/anyBoardUpdates";
+        if($_POST['ignore']) {
+            if (!DtIgnoreList::isListed($_POST['ignore'])) {
+                $ignore = new DtIgnoreList();
+                $ignore->setPath($_POST['ignore']);
+                $ignore->save();
+            }
+        }
+        die();
+    }
+
+    public function removeIgnore($path = NULL)
+    {
+
     }
 
 }
