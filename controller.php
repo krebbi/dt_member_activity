@@ -14,7 +14,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.3.0';
+    protected $pkgVersion = '0.9.4.0';
 
     public function getPackageName()
     {

@@ -2,7 +2,7 @@
     $tp = Loader::helper('concrete/user');
     $dh = Core::make('helper/date');
     if ($tp->canAccessUserSearchInterface()) {
-        if(empty($userActivities)) { ?>
+        if($users) { ?>
         <div class="ccm-dashboard-content-full" data-search="users">
             <div class="table-responsive">
                 <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table tablesorter dt-tablesorter">
