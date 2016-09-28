@@ -1,4 +1,4 @@
-.dt-tablesorter .tablesorter-header:focus {
+.dt-tablesorter .tablesorter-header:focus, .ui-dialog * {
 	outline:none !important;
 }
 

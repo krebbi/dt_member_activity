@@ -38,6 +38,27 @@ class DtIgnoreList
         $this->ilPath = $path;
     }
 
+    public function getID()
+    {
+        return $this->ilID;
+    }
+
+    public function getPath()
+    {
+        return $this->ilPath;
+    }
+
+    public static function getByID($ilID)
+    {
+        $em = \ORM::entityManager();
+        return $em->find(get_class(), $ilID);
+    }
+
+    public static function getAll()
+    {
+        $em = \ORM::entityManager();
+        return $em->getRepository(get_class())->findAll();
+    }
 
     public static function getByPath($path)
     {

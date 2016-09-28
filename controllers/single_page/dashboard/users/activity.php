@@ -59,20 +59,101 @@ class Activity extends DashboardPageController
 
     public function addIgnore()
     {
-        //$_POST['ignore'] = "/boards/anyBoardUpdates";
-        if($_POST['ignore']) {
-            if (!DtIgnoreList::isListed($_POST['ignore'])) {
-                $ignore = new DtIgnoreList();
-                $ignore->setPath($_POST['ignore']);
+        $data = $this->post();
+        $status = 'error';
+        if($data['path']) {
+            if (!DtIgnoreList::isListed($data['path'])) {
+                $ignore = new DtIgnoreList;
+                $ignore->setPath($data['path']);
                 $ignore->save();
+                $status = $ignore->getID();
             }
         }
+        echo json_encode(['status'=>$status]);
         die();
     }
 
     public function removeIgnore($path = NULL)
     {
+        $data = $this->post();
+        $ignore = DtIgnoreList::getByID($data['ID']);
+        $ignore->remove();
+        echo json_encode(['status'=>'ok']);
+        die();
+    }
 
+    public function getIgnoreList()
+    {
+        $allIgnores = DtIgnoreList::getAll();
+
+        ?>
+        <div class="ccm-ui">
+            <table id="ignoreTable" class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><?= t('Path') ?></th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <?php
+                foreach ($allIgnores as $ignore) {
+                    ?>
+                    <tr>
+                        <td><?= $ignore->getID() ?></td>
+                        <td><?= $ignore->getPath() ?></td>
+                        <td style="width: 50px">
+                            <a href="#" class="icon-link removeIgnore" data-ignoreid="<?= $ignore->getID() ?>"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+
+            <div class="form-group has-feedback">
+                <label class="control-label"><?= t('Add Path') ?></label>
+                <input id="addPath" type="text" class="form-control">
+            </div>
+            <button id="addIgnore" type="button" class="btn btn-primary"><?= t('Add') ?></button>
+
+        </div>
+        <script>
+            $(document).on('click','.removeIgnore', function() {
+                var $ignore = $(this);
+                var ignoreLink = '<?= $this->action('removeIgnore') ?>';
+                var data = {
+                    'ID' : $ignore.attr('data-ignoreid')
+                };
+                $.post(ignoreLink, data, function (r) {
+                    response = $.parseJSON(r);
+                    console.log(response);
+                    if(response['status'] == 'ok') {
+                        $ignore.parent().parent().remove();
+                    }
+                });
+            });
+
+            $('#addIgnore').on('click', function() {
+                var ignoreLink = '<?= $this->action('addIgnore') ?>';
+                var data = {
+                    'path' : $('#addPath').val()
+                };
+                $.post(ignoreLink, data, function (r) {
+                    response = $.parseJSON(r);
+                    console.log(response);
+                    if(response['status'] !== 'error') {
+                        $('#ignoreTable tbody').append('<tr><td>'+response["status"]+'</td><td>'+$('#addPath').val()+'</td><td style="width: 50px"><a href="#" class="icon-link removeIgnore" data-ignoreid="'+response["status"]+'"><i class="fa fa-trash-o"></i></a></td></tr>');
+                        $('#addPath').val('');
+                    }
+                });
+            });
+        </script>
+        <?php
+        die();
     }
 
 }

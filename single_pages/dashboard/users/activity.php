@@ -3,7 +3,7 @@
     $dh = Core::make('helper/date');
     if ($tp->canAccessUserSearchInterface()) {
         if($users) { ?>
-        <div class="ccm-dashboard-content-full" data-search="users">
+        <div class="ccm-dashboard-content-full">
             <div class="table-responsive">
                 <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table tablesorter dt-tablesorter">
                     <thead>
@@ -38,16 +38,37 @@
                 </table>
             </div>
         </div>
+            <div class="ccm-dashboard-header-buttons">
+                <a id="ignoreList" href="#" class="btn btn-primary"><?php echo t("Ignore List") ?></a>
+            </div>
             <script>
                 $(window).on('load', function() {
                     // Initialize tablesorter
                     var $ts_users = $("table.dt-tablesorter")
                         .tablesorter({
-                            theme: 'bootstrap_2',
-                            widthFixed: true,
                             widgets: ['zebra', 'filter']
                         })
                 });
+
+                $('#ignoreList').on('click', function() {
+                    $.fn.dialog.open({
+                        href: '<?= $view->action('getIgnoreList') ?>',
+                        title: 'Ignore List',
+                        width: '680',
+                        height: '420',
+                        modal: true,
+                        buttons: [
+                            {
+                                text: '<?= t('Close') ?>',
+                                click: function () {
+                                    $(this).dialog('close');
+                                }
+                            }
+                        ]
+                    });
+                    return false;
+                });
+
             </script>
     <?php
         }
@@ -90,8 +111,6 @@
                     // Initialize tablesorter
                     var $ts_users = $("table.dt-tablesorter")
                         .tablesorter({
-                            theme: 'bootstrap_2',
-                            widthFixed: true,
                             widgets: ['zebra', 'filter']
                         })
                 });

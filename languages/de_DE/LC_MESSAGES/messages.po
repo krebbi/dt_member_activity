@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-09-27 16:05+0200\n"
-"PO-Revision-Date: 2016-09-27 16:07+0200\n"
+"POT-Creation-Date: 2016-09-28 12:24+0200\n"
+"PO-Revision-Date: 2016-09-28 12:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-KeywordsList: t\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controller.php:26
+#: controller.php:27
 msgid "Track Member Activity"
 msgstr "Benutzeraktivität aufzeichnen"
 
-#: controller.php:31
+#: controller.php:32
 msgid ""
 "All Member Activities will be tracked.<br>created by <a href=\"https://www."
 "datatainment.de\" target=\"_blank\">datatainment</a>"
@@ -29,27 +29,41 @@ msgstr ""
 "Präsentiert von <a href=\"https://www.datatainment.de\" target=\"_blank"
 "\">datatainment</a>"
 
-#: controller.php:150
+#: controller.php:154
 msgid "Member Activity"
 msgstr "Benutzeraktivität"
 
-#: controller.php:162
+#: controller.php:166
 #, fuzzy
 msgid "datatainment Member Activity"
 msgstr "datatainment Benutzeraktivität"
 
-#: controller.php:170 single_pages/dashboard/users/activity.php:15
+#: controller.php:174 single_pages/dashboard/users/activity.php:15
 msgid "Last Activity"
 msgstr "Letzte Aktivität"
 
-#: controller.php:174 single_pages/dashboard/users/activity.php:14
+#: controller.php:178 single_pages/dashboard/users/activity.php:14
 msgid "Last Login"
 msgstr "Letzter Login"
 
-#: controllers/single_page/dashboard/users/activity.php:38
+#: controllers/single_page/dashboard/users/activity.php:39
 #, php-format
 msgid "View %s's activity"
 msgstr "%s's Aktivität"
+
+#: controllers/single_page/dashboard/users/activity.php:95
+#: single_pages/dashboard/users/activity.php:88
+#, fuzzy
+msgid "Path"
+msgstr "Pfad"
+
+#: controllers/single_page/dashboard/users/activity.php:118
+msgid "Add Path"
+msgstr "Pfad hinzufügen"
+
+#: controllers/single_page/dashboard/users/activity.php:121
+msgid "Add"
+msgstr "Hinzufügen"
 
 #: elements/users/activity.php:8
 #, fuzzy
@@ -159,37 +173,40 @@ msgstr "Anzahl der Anmeldungen"
 msgid "Last IP"
 msgstr "Letzte IP"
 
-#: single_pages/dashboard/users/activity.php:63
+#: single_pages/dashboard/users/activity.php:42
+msgid "Ignore List"
+msgstr ""
+
+#: single_pages/dashboard/users/activity.php:62
+msgid "Close"
+msgstr "Schließen"
+
+#: single_pages/dashboard/users/activity.php:84
 #, fuzzy
 msgid "Date"
 msgstr "Datum"
 
-#: single_pages/dashboard/users/activity.php:64
+#: single_pages/dashboard/users/activity.php:85
 #, fuzzy
 msgid "IP"
 msgstr "IP"
 
-#: single_pages/dashboard/users/activity.php:65
+#: single_pages/dashboard/users/activity.php:86
 #, fuzzy
 msgid "Type"
 msgstr "Typ"
 
-#: single_pages/dashboard/users/activity.php:66
+#: single_pages/dashboard/users/activity.php:87
 #, fuzzy
 msgid "Name"
 msgstr "Name"
 
-#: single_pages/dashboard/users/activity.php:67
-#, fuzzy
-msgid "Path"
-msgstr "Pfad"
-
-#: single_pages/dashboard/users/activity.php:102
+#: single_pages/dashboard/users/activity.php:121
 #, fuzzy
 msgid "Back"
 msgstr "Zurück"
 
-#: single_pages/dashboard/users/activity.php:109
+#: single_pages/dashboard/users/activity.php:128
 #, fuzzy
 msgid ""
 "You do not have access to user search. This setting may be changed in the "
@@ -214,9 +231,6 @@ msgstr ""
 
 #~ msgid "This package requires that Altair Theme be installed"
 #~ msgstr "Dieses Paket erfordert, dass Altair Theme installiert ist."
-
-#~ msgid "Add"
-#~ msgstr "Hinzufügen"
 
 #~ msgid "Please enter a Board Name"
 #~ msgstr "Bitte ein Boardnamen eintragen"
@@ -293,9 +307,6 @@ msgstr ""
 
 #~ msgid "The Deadline or Due-Date for the Task."
 #~ msgstr "Die Deadline bzw. der Fertigstellungstermin der Aufgabe."
-
-#~ msgid "Close"
-#~ msgstr "Schließen"
 
 #~ msgid "Column Name"
 #~ msgstr "Spaltenname"

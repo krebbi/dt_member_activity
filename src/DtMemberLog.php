@@ -119,13 +119,11 @@ class DtMemberLog
     }
 
 
-
     public static function getByID($lID)
     {
         $em = \ORM::entityManager();
         return $em->find(get_class(), $lID);
     }
-
 
     public static function getLastUpdate($type, $typeID)
     {
