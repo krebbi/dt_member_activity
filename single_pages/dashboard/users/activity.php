@@ -20,18 +20,28 @@
                 <tbody>
             <?php
             foreach ($users as $user) {
+                // 5.7 vs. 8.0 "IT WILL BE COMPATIBLE" BULLSHIT CHECK
+                $lastLoginObj = $user->getAttribute('dt_last_login');
+                if(!is_object($lastLoginObj) && $user->getAttribute('dt_last_login')) {
+                    $lastLoginObj = new DateTime($user->getAttribute('dt_last_login'));
+                }
+                $lastActivityObj = $user->getAttribute('dt_last_activity');
+                if(!is_object($lastActivityObj) && $user->getAttribute('dt_last_activity')) {
+                    $lastActivityObj = new DateTime($user->getAttribute('dt_last_activity'));
+                }
+
                 ?>
-                    <tr>
-                        <td><a data-user-name="<?= $user->getUserName() ?>" data-user-email="<?= $user->getUserEmail()?>" data-user-id="<?= $user->getUserID()?>" href="<?= URL::to('/dashboard/users/activity',$user->getUserID()) ?>"><?= $user->getUserName()?></a></td>
-                        <td><a href="mailto:<?= $user->getUserEmail() ?>"><?= $user->getUserEmail() ?></a></td>
-                        <td><?= $user->getNumLogins() ?></td>
-                        <td><span class="hidden"><?= $user->getAttribute('dt_last_login') ? (new DateTime($user->getAttribute('dt_last_login')))->getTimestamp() : "0" ?></span><?= $dh->formatDateTime($user->getAttribute('dt_last_login'), true, true) ?></td>
-                        <td><span class="hidden"><?= $user->getAttribute('dt_last_activity') ? (new DateTime($user->getAttribute('dt_last_activity')))->getTimestamp() : "0" ?></span><?= $dh->formatDateTime($user->getAttribute('dt_last_activity'), true, true) ?>
+                <tr>
+                    <td><a data-user-name="<?= $user->getUserName() ?>" data-user-email="<?= $user->getUserEmail()?>" data-user-id="<?= $user->getUserID()?>" href="<?= URL::to('/dashboard/users/activity',$user->getUserID()) ?>"><?= $user->getUserName()?></a></td>
+                    <td><a href="mailto:<?= $user->getUserEmail() ?>"><?= $user->getUserEmail() ?></a></td>
+                    <td><?= $user->getNumLogins() ?></td>
+                    <td><span class="hidden"><?= $lastLoginObj ? $lastLoginObj->getTimestamp() : "0" ?></span><?= $dh->formatDateTime($lastLoginObj, true, true) ?></td>
+                    <td><span class="hidden"><?= $lastActivityObj ? $lastActivityObj->getTimestamp() : "0" ?></span><?= $dh->formatDateTime($lastActivityObj, true, true) ?>
                         <br><?= $userslastactivity[$user->getUserID()] ? $userslastactivity[$user->getUserID()]->getTypeName() : "" ?>
                         <br><?= $userslastactivity[$user->getUserID()] ? $userslastactivity[$user->getUserID()]->getTypePath() : "" ?>
-                        </td>
-                        <td><?= $user->getLastIPAddress() ?></td>
-                    </tr>
+                    </td>
+                    <td><?= $user->getLastIPAddress() ?></td>
+                </tr>
 
             <?php }
             ?>
