@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace Concrete\Package\DtMemberActivity;
 
 use \Core;
@@ -20,7 +19,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.4.3';
+    protected $pkgVersion = '0.9.5.0';
 
     public function getPackageName()
     {
@@ -52,7 +51,7 @@ class Controller extends Package
         parent::uninstall();
         $db = \Database::connection();
         $db->query('drop table DtMemberActivityLog');
-        self::uninstallUserAttributes();
+        $db->query('drop table DtMemberIgnoreList');
     }
 
     public function on_start()
@@ -62,13 +61,13 @@ class Controller extends Package
         $ph = Array('position' => Asset::ASSET_POSITION_HEADER, 'minify' => false, 'combine' => false);
         $pf = Array('position' => Asset::ASSET_POSITION_FOOTER, 'minify' => false, 'combine' => false);
 
-        $al->register( 'javascript', 'dt.tablesorter', 'src/tablesorter/js/jquery.tablesorter.combined.min.js', $pf, $this );
-        $al->register( 'javascript', 'dt.tablesorter.widgets', 'src/tablesorter/js/jquery.tablesorter.widgets.js', $pf, $this );
-        $al->register( 'javascript', 'dt.tablesorter.widgets.alignchar', 'src/tablesorter/js/widgets/widget-alignChar.min.js', $pf, $this );
-        $al->register( 'javascript', 'dt.tablesorter.extras.pager', 'src/tablesorter/js/extras/jquery.tablesorter.pager.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter', 'assets/tablesorter/js/jquery.tablesorter.combined.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.widgets', 'assets/tablesorter/js/jquery.tablesorter.widgets.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.widgets.alignchar', 'assets/tablesorter/js/widgets/widget-alignChar.min.js', $pf, $this );
+        $al->register( 'javascript', 'dt.tablesorter.extras.pager', 'assets/tablesorter/js/extras/jquery.tablesorter.pager.min.js', $pf, $this );
 
-        $al->register( 'css', 'dt.tablesorter', 'src/tablesorter/css/theme.c5.css', $ph, $this );
-        $al->register( 'css', 'dt.tablesorter.filter', 'src/tablesorter/css/filter.formatter.min.css', $ph, $this );
+        $al->register( 'css', 'dt.tablesorter', 'assets/tablesorter/css/theme.c5.css', $ph, $this );
+        $al->register( 'css', 'dt.tablesorter.filter', 'assets/tablesorter/css/filter.formatter.min.css', $ph, $this );
 
 
         \Events::addListener(
@@ -83,7 +82,7 @@ class Controller extends Package
                     if (!DtIgnoreList::isListed($path)) {
 
                         $log = new DtMemberLog();
-                        $log->setType('Collection');
+                        $log->setType('Page');
                         $log->setTypeID($page->getCollectionID());
                         $log->setTypeName($page->getCollectionName());
                         $log->setTypePath($path);
@@ -156,20 +155,15 @@ class Controller extends Package
 
     public static function installUserAttributes($pkg)
     {
-        //user attributes
         $uakc = AttributeKeyCategory::getByHandle('user');
         $uakc->setAllowAttributeSets(AttributeKeyCategory::ASET_ALLOW_MULTIPLE);
 
-        //define attr group, and the different attribute types we'll use
         $attrSet = AttributeSet::getByHandle('dt_member_activity');
         if (!is_object($attrSet)) {
             $attrSet = $uakc->addSet('dt_member_activity', t('datatainment Member Activity'), $pkg);
         }
-        $text = AttributeType::getByHandle('text');
-        $address = AttributeType::getByHandle('address');
-        $checkbox = AttributeType::getByHandle('boolean');
-        $date = AttributeType::getByHandle('date');
 
+        $date = AttributeType::getByHandle('date');
 
         self::installUserAttribute('dt_last_activity', t('Last Activity'), $date, $pkg, $attrSet,[
             'uakProfileEdit' => false,
@@ -181,12 +175,6 @@ class Controller extends Package
         ]);
     }
 
-    public static function uninstallUserAttributes()
-    {
-        AttributeSet::getByHandle('dt_member_activity')->delete();
-        UserAttributeKey::getByHandle('dt_last_activity')->delete();
-        UserAttributeKey::getByHandle('dt_last_login')->delete();
-    }
 
     public static function installUserAttribute($handle, $name, $type, $pkg, $set, $data = null)
     {

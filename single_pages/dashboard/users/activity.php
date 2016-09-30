@@ -1,4 +1,5 @@
-<?php
+<?php defined('C5_EXECUTE') or die("Access Denied.");
+
     $tp = Loader::helper('concrete/user');
     $dh = Core::make('helper/date');
     if ($tp->canAccessUserSearchInterface()) {
@@ -52,7 +53,7 @@
 
                 $('#ignoreList').on('click', function() {
                     $.fn.dialog.open({
-                        href: '<?= $view->action('getIgnoreList') ?>',
+                        href: '<?= $view->action('getIgnoreList') ?>/'+ new Date().getTime(),
                         title: 'Ignore List',
                         width: '680',
                         height: '420',
@@ -95,8 +96,8 @@
                             <tr>
                                 <td><span class="hidden"><?= $activity->getDate()->getTimestamp() ?></span><?= $dh->formatDateTime($activity->getDate(), true, true) ?></td>
                                 <td><?= $activity->getIP() ?></td>
-                                <td><?= $activity->getType() ?></td>
-                                <td><?= $activity->getTypeName() ?></td>
+                                <td><?= t($activity->getType()) ?></td>
+                                <td><?= t($activity->getTypeName()) ?></td>
                                 <td><?= $activity->getTypePath() ?></td>
                             </tr>
 

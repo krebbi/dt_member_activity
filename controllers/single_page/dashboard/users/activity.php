@@ -16,12 +16,11 @@ use Concrete\Package\DtMemberActivity\Src\DtIgnoreList;
 
 class Activity extends DashboardPageController
 {
-    public function view($uID = false, $from = false, $to = false)
+    public function view($uID = false)
     {
         $this->requireAsset('javascript', 'dt.tablesorter');
         $this->requireAsset('javascript', 'dt.tablesorter.widgets');
         $this->requireAsset('javascript', 'dt.tablesorter.widgets.alignchar');
-        //$this->requireAsset('javascript', 'dt.tablesorter.extras.pager');
 
         $this->requireAsset('css', 'dt.tablesorter');
         $this->requireAsset('css', 'dt.tablesorter.filter');
@@ -37,13 +36,7 @@ class Activity extends DashboardPageController
 
         if (is_object($ui)) {
             $this->set('pageTitle', t('View %s\'s activity', $user->getUserName()));
-
-            if($from && $to) {
-                $this->set('userActivities', DtMemberLog::getActivityByUserAndDaterange($uID,$from,$to));
-            } else {
-                $this->set('userActivities', DtMemberLog::getActivityByUser($uID));
-            }
-
+            $this->set('userActivities', DtMemberLog::getActivityByUser($uID));
         } else {
             $userlist = new \Concrete\Core\User\UserList();
             $userlist->sortByDateAdded();
@@ -67,6 +60,8 @@ class Activity extends DashboardPageController
                 $ignore->setPath($data['path']);
                 $ignore->save();
                 $status = $ignore->getID();
+            } else {
+                $status = 'already listed';
             }
         }
         echo json_encode(['status'=>$status]);
@@ -82,7 +77,7 @@ class Activity extends DashboardPageController
         die();
     }
 
-    public function getIgnoreList()
+    public function getIgnoreList($dump = NULL)
     {
         $allIgnores = DtIgnoreList::getAll();
 

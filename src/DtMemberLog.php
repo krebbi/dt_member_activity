@@ -125,23 +125,6 @@ class DtMemberLog
         return $em->find(get_class(), $lID);
     }
 
-    public static function getLastUpdate($type, $typeID)
-    {
-        $em = \ORM::entityManager();
-        $qb = $em->createQueryBuilder();
-        $query = $qb->select(array('s'))
-            ->from(get_class(), 's')
-            ->where('s.lType = :type')
-            ->andWhere('s.lTypeID = :typeID')
-            ->andWhere('s.lChange IS NOT NULL')
-            ->setParameter('type', $type)
-            ->setParameter('typeID', $typeID)
-            ->addOrderBy('s.lID', 'DESC')
-            ->setMaxResults( 1 )
-            ->getQuery();
-
-        return $query->getResult();
-    }
 
     public static function getLastTypeIdUpdate($typeID, $max)
     {
@@ -176,24 +159,6 @@ class DtMemberLog
             ['lID' => 'DESC']
         );
     }
-
-    public static function getActivityByUserAndDaterange($uID,$from,$to)
-    {
-        $em = \ORM::entityManager();
-        $qb = $em->createQueryBuilder();
-        $query = $qb->select(array('s'))
-            ->from(get_class(), 's')
-            ->where('s.luID = :uID')
-            ->andWhere('s.lDate > :from')
-            ->andWhere('s.lDate < :to')
-            ->setParameter('uID', $uID)
-            ->setParameter('from', $from)
-            ->setParameter('to', $to)
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
 
 
     public function getID()
