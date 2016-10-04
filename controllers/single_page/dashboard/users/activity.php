@@ -53,10 +53,11 @@ class Activity extends DashboardPageController
     {
         $data = $this->post();
         $status = 'error';
-        if($data['path']) {
+        if($data['path'] && $data['match']) {
             if (!DtIgnoreList::isListed($data['path'])) {
                 $ignore = new DtIgnoreList;
                 $ignore->setPath($data['path']);
+                if($data['match'] == 'exact') $ignore->setExact(true); else $ignore->setExact(false);
                 $ignore->save();
                 $status = $ignore->getID();
             } else {
@@ -112,6 +113,10 @@ class Activity extends DashboardPageController
                 <label class="control-label"><?= t('Add Path') ?></label>
                 <input id="addPath" type="text" class="form-control">
             </div>
+            <div class="form-group has-feedback">
+                <label class="radio-inline"><input type="radio" name="match" value="exact"><?= t('Exact Match') ?></label>
+                <label class="radio-inline"><input type="radio" name="match" value="contains"><?= t('Contains') ?></label>
+            </div>
             <button id="addIgnore" type="button" class="btn btn-primary"><?= t('Add') ?></button>
 
         </div>
@@ -134,7 +139,8 @@ class Activity extends DashboardPageController
             $('#addIgnore').on('click', function() {
                 var ignoreLink = '<?= $this->action('addIgnore') ?>';
                 var data = {
-                    'path' : $('#addPath').val()
+                    'path' : $('#addPath').val(),
+                    'match' : $('input[name=match]:checked').val()
                 };
                 $.post(ignoreLink, data, function (r) {
                     response = $.parseJSON(r);

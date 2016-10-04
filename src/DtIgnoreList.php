@@ -26,6 +26,11 @@ class DtIgnoreList
      */
     protected $ilPath;
 
+    /**
+     * @Column(type="boolean")
+     */
+    protected $ilExact;
+
 
 
     public function __construct()
@@ -38,6 +43,11 @@ class DtIgnoreList
         $this->ilPath = $path;
     }
 
+    public function setExact($bool)
+    {
+        $this->ilExact = $bool;
+    }
+
     public function getID()
     {
         return $this->ilID;
@@ -46,6 +56,11 @@ class DtIgnoreList
     public function getPath()
     {
         return $this->ilPath;
+    }
+
+    public function getExactMatch()
+    {
+        return $this->ilExact;
     }
 
     public static function getByID($ilID)
