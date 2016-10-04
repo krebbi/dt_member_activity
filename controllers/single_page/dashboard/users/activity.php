@@ -19,7 +19,6 @@ class Activity extends DashboardPageController
     public function view($uID = false)
     {
         $this->requireAsset('javascript', 'dt.tablesorter');
-        $this->requireAsset('javascript', 'dt.tablesorter.widgets');
         $this->requireAsset('javascript', 'dt.tablesorter.widgets.alignchar');
 
         $this->requireAsset('css', 'dt.tablesorter');

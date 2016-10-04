@@ -42,7 +42,7 @@ class DtMemberLog
     protected $luEmail;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="text",nullable=false)
      */
     protected $lDate;
 
@@ -93,9 +93,10 @@ class DtMemberLog
         $this->luEmail = $email;
     }
 
-    public function setDate($date)
+    public function setDate($dateObj)
     {
-        $this->lDate = $date;
+        $dateObj->setTimezone('UTC');
+        $this->lDate = $dateObj->format('Y-m-d H:i:s');
     }
 
     public function setType($type)
@@ -123,22 +124,6 @@ class DtMemberLog
     {
         $em = \ORM::entityManager();
         return $em->find(get_class(), $lID);
-    }
-
-
-    public static function getLastTypeIdUpdate($typeID, $max)
-    {
-        $em = \ORM::entityManager();
-        $qb = $em->createQueryBuilder();
-        $query = $qb->select(array('s'))
-            ->from(get_class(), 's')
-            ->where('s.lTypeID = :TypeID')
-            ->setParameter('TypeID', $typeID)
-            ->addOrderBy('s.lID', 'DESC')
-            ->setMaxResults( $max )
-            ->getQuery();
-
-        return $query->getResult();
     }
 
 
@@ -178,7 +163,9 @@ class DtMemberLog
 
     public function getDate()
     {
-        return $this->lDate;
+        $return = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->lDate,'UTC');
+        $return->setTimezone('UTC');
+        return $return;
     }
 
     public function getTypeID()

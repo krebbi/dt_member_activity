@@ -13,13 +13,14 @@ use Concrete\Core\Attribute\Key\UserKey as UserAttributeKey;
 use Concrete\Core\Attribute\Type as AttributeType;
 use Concrete\Package\DtMemberActivity\Src\DtMemberLog;
 use Concrete\Package\DtMemberActivity\Src\DtIgnoreList;
+use Carbon\Carbon;
 
 
 class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.6.0';
+    protected $pkgVersion = '0.9.7.0';
 
     public function getPackageName()
     {
@@ -81,18 +82,19 @@ class Controller extends Package
 
                     if (!DtIgnoreList::isListed($path)) {
 
+                        $now = (Carbon::now())->setTimezone('UTC');
                         $log = new DtMemberLog();
                         $log->setType('Page');
                         $log->setTypeID($page->getCollectionID());
                         $log->setTypeName($page->getCollectionName());
                         $log->setTypePath($path);
                         $log->setUserID($u->getUserID());
-                        $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app'))))->setTimeZone(new \DateTimeZone('UTC')));
+                        $log->setDate($now);
                         $log->setUserName($u->getUserName());
                         $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
                         $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                         $log->save();
-                        $u->getUserInfoObject()->setAttribute('dt_last_activity', $log->getDate()->format('Y-m-d H:i:s'));
+                        $u->getUserInfoObject()->setAttribute('dt_last_activity', $now->format('Y-m-d H:i:s'));
                     }
                 }
             }
@@ -105,6 +107,7 @@ class Controller extends Package
                 $u = new User();
                 if($u->getUserID() !== NULL) {
                     $file = $e->getFileVersionObject();
+                    $now = (Carbon::now())->setTimezone('UTC');
                     $log = new DtMemberLog();
 
                     $log->setType('File');
@@ -112,12 +115,12 @@ class Controller extends Package
                     $log->setTypeName($file->getFilename());
                     $log->setTypePath($file->getRelativePath());
                     $log->setUserID($u->getUserID());
-                    $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
+                    $log->setDate(new Carbon("now", 'UTC'));
                     $log->setUserName($u->getUserName());
                     $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
                     $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                     $log->save();
-                    $u->getUserInfoObject()->setAttribute('dt_last_activity',$log->getDate()->format('Y-m-d H:i:s'));
+                    $u->getUserInfoObject()->setAttribute('dt_last_activity', $now->format('Y-m-d H:i:s'));
                 }
             }
         );
@@ -129,6 +132,7 @@ class Controller extends Package
                 $u = $e->getUserObject();
 
                 if($u->getUserID() !== NULL) {
+                    $now = (Carbon::now())->setTimezone('UTC');
                     $log = new DtMemberLog();
 
                     $log->setType('Login');
@@ -136,12 +140,12 @@ class Controller extends Package
                     $log->setTypeName('Login');
                     $log->setTypePath('/login');
                     $log->setUserID($u->getUserID());
-                    $log->setDate((new \DateTime("now", new \DateTimeZone(\Concrete\Core\Localization\Service\Date::getTimezoneID('app')) ))->setTimeZone(new \DateTimeZone('UTC')));
+                    $log->setDate(new Carbon("now", 'UTC'));
                     $log->setUserName($u->getUserName());
                     $log->setUserEmail($u->getUserInfoObject()->getUserEmail());
                     $log->setIP($u->getUserInfoObject()->getLastIPAddress());
                     $log->save();
-                    $u->getUserInfoObject()->setAttribute('dt_last_login',$log->getDate()->format('Y-m-d H:i:s'));
+                    $u->getUserInfoObject()->setAttribute('dt_last_login',$now->format('Y-m-d H:i:s'));
                 }
             }
         );

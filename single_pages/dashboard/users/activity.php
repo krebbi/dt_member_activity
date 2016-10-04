@@ -19,16 +19,20 @@
                 </thead>
                 <tbody>
             <?php
+            $dh = Core::make('helper/date');
             foreach ($users as $user) {
                 // 5.7 vs. 8.0 "IT WILL BE COMPATIBLE" BULLSHIT CHECK
-                $lastLoginObj = $user->getAttribute('dt_last_login');
+                if($user->getAttribute('dt_last_login') instanceof DateTime) $lastLoginObj = \Carbon\Carbon::instance($user->getAttribute('dt_last_login'));
                 if(!is_object($lastLoginObj) && $user->getAttribute('dt_last_login')) {
-                    $lastLoginObj = new DateTime($user->getAttribute('dt_last_login'));
+                    $lastLoginObj = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->getAttribute('dt_last_login'),'UTC');
                 }
-                $lastActivityObj = $user->getAttribute('dt_last_activity');
+
+                if($user->getAttribute('dt_last_activity') instanceof DateTime) $lastActivityObj = \Carbon\Carbon::instance($user->getAttribute('dt_last_activity'));
                 if(!is_object($lastActivityObj) && $user->getAttribute('dt_last_activity')) {
-                    $lastActivityObj = new DateTime($user->getAttribute('dt_last_activity'));
+                    $lastActivityObj = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->getAttribute('dt_last_activity'),'UTC');
                 }
+
+                if($lastActivityObj instanceof \Carbon\Carbon) $lastActivityObj->setTimezone($dh->getTimezoneID('app'));
 
                 ?>
                 <tr>
@@ -43,7 +47,10 @@
                     <td><?= $user->getLastIPAddress() ?></td>
                 </tr>
 
-            <?php }
+            <?php
+                unset($lastActivityObj);
+                unset($lastLoginObj);
+            }
             ?>
                 </tbody>
                 </table>
@@ -102,16 +109,19 @@
                         <tbody>
                         <?php
                         foreach ($userActivities as $activity) {
+                            $date = $activity->getDate();
                             ?>
                             <tr>
-                                <td><span class="hidden"><?= $activity->getDate()->getTimestamp() ?></span><?= $dh->formatDateTime($activity->getDate(), true, true) ?></td>
+                                <td><span class="hidden"><?= $date->getTimestamp() ?></span><?= $dh->formatDateTime($date, true, true) ?></td>
                                 <td><?= $activity->getIP() ?></td>
                                 <td><?= t($activity->getType()) ?></td>
                                 <td><?= t($activity->getTypeName()) ?></td>
                                 <td><?= $activity->getTypePath() ?></td>
                             </tr>
 
-                        <?php }
+                        <?php
+                            unset($activity);
+                        }
                         ?>
                         </tbody>
                     </table>
