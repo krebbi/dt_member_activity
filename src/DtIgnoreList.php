@@ -58,7 +58,7 @@ class DtIgnoreList
         return $this->ilPath;
     }
 
-    public function getExactMatch()
+    public function isExact()
     {
         return $this->ilExact;
     }
@@ -91,6 +91,17 @@ class DtIgnoreList
             ['ilPath' => $path],
             ['ilID' => 'ASC']
         );
+
+        $allExcludes = $em->getRepository(get_class())->findAll();
+
+        foreach ($allExcludes as $exclude) {
+            if($exclude->isExact()) {
+                if($path == $exclude->getPath()) $result = true;
+            } else {
+                if(strpos($path,$exclude->getPath()) !== false) $result = true;
+            }
+        }
+
         if ($result) return true; else return false;
     }
 

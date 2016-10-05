@@ -87,6 +87,7 @@ class Activity extends DashboardPageController
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th><?= t('Match') ?></th>
                     <th><?= t('Path') ?></th>
                     <th></th>
                 </tr>
@@ -98,6 +99,7 @@ class Activity extends DashboardPageController
                     ?>
                     <tr>
                         <td><?= $ignore->getID() ?></td>
+                        <td><?= $ignore->isExact() ? t('Exact') : t('Contains') ?></td>
                         <td><?= $ignore->getPath() ?></td>
                         <td style="width: 50px">
                             <a href="#" class="icon-link removeIgnore" data-ignoreid="<?= $ignore->getID() ?>"><i class="fa fa-trash-o"></i></a>
@@ -114,7 +116,8 @@ class Activity extends DashboardPageController
                 <input id="addPath" type="text" class="form-control">
             </div>
             <div class="form-group has-feedback">
-                <label class="radio-inline"><input type="radio" name="match" value="exact"><?= t('Exact Match') ?></label>
+                <label class="control-label"><?= t('Match Type') ?></label><br>
+                <label class="radio-inline"><input type="radio" name="match" value="exact"><?= t('Exact') ?></label>
                 <label class="radio-inline"><input type="radio" name="match" value="contains"><?= t('Contains') ?></label>
             </div>
             <button id="addIgnore" type="button" class="btn btn-primary"><?= t('Add') ?></button>
