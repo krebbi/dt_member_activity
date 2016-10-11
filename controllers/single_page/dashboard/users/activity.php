@@ -149,7 +149,7 @@ class Activity extends DashboardPageController
                     response = $.parseJSON(r);
                     console.log(response);
                     if(response['status'] !== 'error') {
-                        $('#ignoreTable tbody').append('<tr><td>'+response["status"]+'</td><td>'+$('#addPath').val()+'</td><td style="width: 50px"><a href="#" class="icon-link removeIgnore" data-ignoreid="'+response["status"]+'"><i class="fa fa-trash-o"></i></a></td></tr>');
+                        $('#ignoreTable tbody').append('<tr><td>'+response["status"]+'</td><td>'+data["match"].charAt(0).toUpperCase()+data["match"].slice(1)+'</td><td>'+data["path"]+'</td><td style="width: 50px"><a href="#" class="icon-link removeIgnore" data-ignoreid="'+response["status"]+'"><i class="fa fa-trash-o"></i></a></td></tr>');
                         $('#addPath').val('');
                     }
                 });

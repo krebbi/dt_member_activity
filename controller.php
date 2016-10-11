@@ -20,7 +20,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'dt_member_activity';
     protected $appVersionRequired = '5.7.5.0';
-    protected $pkgVersion = '0.9.7.2';
+    protected $pkgVersion = '0.9.7.4';
 
     public function getPackageName()
     {
@@ -82,7 +82,8 @@ class Controller extends Package
 
                     if (!DtIgnoreList::isListed($path)) {
 
-                        $now = (Carbon::now())->setTimezone('UTC');
+                        $now = Carbon::now();
+                        $now->setTimezone('UTC');
                         $log = new DtMemberLog();
                         $log->setType('Page');
                         $log->setTypeID($page->getCollectionID());
@@ -107,7 +108,8 @@ class Controller extends Package
                 $u = new User();
                 if($u->getUserID() !== NULL) {
                     $file = $e->getFileVersionObject();
-                    $now = (Carbon::now())->setTimezone('UTC');
+                    $now = Carbon::now();
+                    $now->setTimezone('UTC');
                     $log = new DtMemberLog();
 
                     $log->setType('File');
@@ -132,7 +134,8 @@ class Controller extends Package
                 $u = $e->getUserObject();
 
                 if($u->getUserID() !== NULL) {
-                    $now = (Carbon::now())->setTimezone('UTC');
+                    $now = Carbon::now();
+                    $now->setTimezone('UTC');
                     $log = new DtMemberLog();
 
                     $log->setType('Login');

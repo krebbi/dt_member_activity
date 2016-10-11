@@ -87,11 +87,6 @@ class DtIgnoreList
     public static function isListed($path)
     {
         $em = \ORM::entityManager();
-        $result = $em->getRepository(get_class())->findBy(
-            ['ilPath' => $path],
-            ['ilID' => 'ASC']
-        );
-
         $allExcludes = $em->getRepository(get_class())->findAll();
 
         foreach ($allExcludes as $exclude) {
