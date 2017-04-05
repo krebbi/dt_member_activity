@@ -1,1 +1,1 @@
-Track your logged in users activity. 
+Track your logged in users activity in concrete5. 
